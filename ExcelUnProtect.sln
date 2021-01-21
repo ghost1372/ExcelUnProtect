@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelUnProtect", "ExcelUnProtect\ExcelUnProtect.csproj", "{050D90E0-46BB-4642-BFD7-83410C0D51DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{050D90E0-46BB-4642-BFD7-83410C0D51DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{050D90E0-46BB-4642-BFD7-83410C0D51DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{050D90E0-46BB-4642-BFD7-83410C0D51DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{050D90E0-46BB-4642-BFD7-83410C0D51DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F91DBD5-59DC-468B-931B-4B831D4CAC65}
+	EndGlobalSection
+EndGlobal
