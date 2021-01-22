@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using Application = System.Windows.Application;
 using Button = System.Windows.Controls.Button;
+using MessageBox = HandyControl.Controls.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace ExcelUnProtect
@@ -20,6 +21,7 @@ namespace ExcelUnProtect
         private readonly string _pathWorkBook = System.IO.Path.Combine(Path, @"xl\workbook.xml");
         private readonly string _pathSheets = System.IO.Path.Combine(Path, @"xl\worksheets");
 
+        private bool _exception = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -40,6 +42,7 @@ namespace ExcelUnProtect
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
+            _exception = false;
             if (Directory.Exists(_archivePath))
             {
                 Directory.Delete(_archivePath, true);
@@ -47,7 +50,7 @@ namespace ExcelUnProtect
 
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Multiselect = true, Filter = "Excel Files|*.xlsx;*.xls"
+                Multiselect = true, Filter = "Excel Files|*.xlsx"
             };
 
             if (openFileDialog.ShowDialog() == true)
@@ -58,33 +61,43 @@ namespace ExcelUnProtect
                     UnProtectExcel(file);
                 }
 
-                SaveUnProtectedExcel();
+                if (!_exception)
+                {
+                    SaveUnProtectedExcel();
+                }
             }
         }
 
         private void UnProtectExcel(string fileName)
         {
-            if (Directory.Exists(Path))
+            try
             {
-                Directory.Delete(Path, true);
+                if (Directory.Exists(Path))
+                {
+                    Directory.Delete(Path, true);
+                }
+
+                ZipFile.ExtractToDirectory(fileName, Path);
+
+                txtLog.Text += $"UnProtecting {System.IO.Path.GetFileNameWithoutExtension(fileName)} WorkBook" + Environment.NewLine;
+
+                UnProtect(_pathWorkBook, "workbookProtection");
+
+                UnProtectionSheets();
+
+                if (!Directory.Exists(_archivePath))
+                {
+                    Directory.CreateDirectory(_archivePath);
+                }
+                ZipFile.CreateFromDirectory(Path, System.IO.Path.Combine(_archivePath, System.IO.Path.Combine(_archivePath, System.IO.Path.GetFileName(fileName))));
+
+                txtLog.Text += "Done!" + Environment.NewLine;
             }
-
-            ZipFile.ExtractToDirectory(fileName, Path);
-
-            txtLog.Text += $"UnProtecting {System.IO.Path.GetFileNameWithoutExtension(fileName)} WorkBook" + Environment.NewLine;
-
-            UnProtect(_pathWorkBook, "workbookProtection");
-
-            UnProtectionSheets();
-
-            if (!Directory.Exists(_archivePath))
+            catch (InvalidDataException e)
             {
-                Directory.CreateDirectory(_archivePath);
+                MessageBox.Error("This File is Not Supported");
+                _exception = true;
             }
-            ZipFile.CreateFromDirectory(Path, System.IO.Path.Combine(_archivePath, System.IO.Path.Combine(_archivePath, System.IO.Path.GetFileName(fileName))));
-
-            txtLog.Text += "Done!" + Environment.NewLine;
-
         }
 
         private void SaveUnProtectedExcel()
