@@ -12,6 +12,8 @@
     <FileVersion>1.0.0.0</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <LangVersion>latest</LangVersion>
+	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 	<ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
